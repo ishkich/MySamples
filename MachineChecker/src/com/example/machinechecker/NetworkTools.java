@@ -3,7 +3,9 @@ package com.example.machinechecker;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Calendar;
 
@@ -22,6 +24,9 @@ public class NetworkTools {
 
 	private int state = 0;
 
+	// common timeout[ms]
+	private final static int timeout = 1000;
+	
 	public NetworkTools(String host) {
 		this.host = host;
 	}
@@ -121,7 +126,7 @@ public class NetworkTools {
 		Log.i(TAG, "try to ping hostname: " + host);
 		try {
 			long start=getMS();
-			boolean isReachable = addr.isReachable(1000);
+			boolean isReachable = addr.isReachable(timeout);
 			long end=getMS();
 			if(isReachable) {
 				setSuccessful(result, start, end, "ping succeed");
@@ -138,7 +143,9 @@ public class NetworkTools {
 		Log.i(TAG, "try to connect hostname: " + host + ":" + port);
 		try {
 			long start=getMS();
-			Socket s = new Socket(addr, port);
+			Socket s = new Socket();
+			SocketAddress sa = new InetSocketAddress(addr, port);
+			s.connect(sa, timeout);
 			long end=getMS();
 			s.close();
 			setSuccessful(result, start, end, "connected");

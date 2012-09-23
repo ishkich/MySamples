@@ -66,13 +66,21 @@ public class MainActivity extends Activity {
 		do {
 			result = nt.next();
 			String strTempText = "";
-			if(result != null && result.succeeds()) {
-				if(result.getResult()== Result.EResult.SUCCESS) {
+			if(result != null && !result.finished()) {
+				switch(result.getResult()) {
+				case SUCCESS:
 					strTempText = "(" + (index+1) + ")　[" + result.getTestName() + ":OK] ";
-				} else if(result.getResult()== Result.EResult.FAIL){
-					strTempText = "(" + (index+1) + ") [" + result.getTestName() + ":NG] ";			
+					strTempText += " " + result.getComment() + " in " + result.getMsec()+"(msec)";
+					break;
+				case FAIL:
+					strTempText = "(" + (index+1) + ") [" + result.getTestName() + ":NG] ";
+					break;
+				case FINISHED:
+					break;
+				default:
+					// never comes here
+					break;
 				}
-				strTempText += " " + result.getComment() + " in " + result.getMsec()+"(msec)";
 				index++;
 				strResultText += strTempText + "\n";					
 			}
