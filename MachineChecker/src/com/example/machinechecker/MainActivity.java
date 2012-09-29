@@ -1,9 +1,14 @@
 package com.example.machinechecker;
 
-import android.os.Bundle;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +19,7 @@ import android.widget.TextView;
 //import android.widget.ImageView;
 
 public class MainActivity extends Activity {
-
+	private final static String TAG = "MainActivity";
 	private Button buttonCheck;
 	
     @Override
@@ -26,6 +31,26 @@ public class MainActivity extends Activity {
         setContentView(iv);
         */
         setContentView(R.layout.activity_main);
+        
+        Intent intent = getIntent();
+        
+        if (Intent.ACTION_SEND.equals(intent.getAction())) {
+        	String extraText = intent.getExtras().getCharSequence(Intent.EXTRA_TEXT).toString();
+        	URL url;
+			try {
+	        	Log.d(TAG,	"extraText: " + extraText);
+
+				// URLが与えられた時は、値を解析して入力欄に入れる。
+				EditText editHostname=(EditText)findViewById(R.id.editText_editHostname);
+				EditText editPortNo = (EditText)findViewById(R.id.editText_editPortNo);
+				url = new URL(extraText);
+	        	editHostname.setText(url.getHost());
+	        	int port = url.getPort() > 0 ? url.getPort() : url.getDefaultPort();
+	        	editPortNo.setText(port > 0 ? String.valueOf(port) : "");
+			} catch (MalformedURLException e) {
+				
+			}
+        }
         
         // event handlerの追加
         buttonCheck =(Button)findViewById(R.id.button_check);
@@ -41,7 +66,7 @@ public class MainActivity extends Activity {
         	}
         });
     }
-
+   
     private void ButtonCheck_OnClick(){
        //TextView textview1=(TextView)findViewById(R.id.textView_humor);
        //textview1.setText("test");
