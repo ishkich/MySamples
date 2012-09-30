@@ -22,7 +22,7 @@ public class NetworkTools {
 	private InetAddress addr = null;
 	private Integer port = null;
 
-	private int state = 0;
+	private int state = -1;
 
 	// common timeout[ms]
 	private final static int timeout = 1000;
@@ -38,25 +38,14 @@ public class NetworkTools {
 
 	public Result next() {
 		Result ret = null;
+		state++;
 		
 		switch(state) {
 		case 0:
-			Log.d(TAG, "state: " + state);
 			ret = resolve();
-			if(ret != null && ret.succeeds()) {
-				state++;
-			} else {
-				state=-1;
-			}
 			break;
 		case 1:
-			Log.d(TAG, "state: " + state);
 			ret = reachable();
-			if(ret != null && ret.succeeds()) {
-				state++;
-			} else {
-				state=-1;
-			}
 			break;
 		default:
 			Log.d(TAG, "no more test");
@@ -108,6 +97,7 @@ public class NetworkTools {
 		Result result=new Result("reachable");
 		// 名前解決できなかった場合は何もしない。
 		if (addr == null) {
+			result.setResult(Result.EResult.NA);
 			return result;
 		}
 

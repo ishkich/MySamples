@@ -4,6 +4,7 @@ public class Result {
 	enum EResult {
 		SUCCESS, 
 		FAIL,
+		NA,
 		FINISHED
 	};
 	
