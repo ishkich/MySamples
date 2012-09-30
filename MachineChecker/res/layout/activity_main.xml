@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="22dp"
-        android:text="Hostname:"
+        android:text="@string/hostname"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -20,7 +20,7 @@
         android:layout_below="@+id/textView_CheckItemLabel"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:singleLine="true" />
+        android:singleLine="true" android:inputType="textUri"/>
 
     <TextView
         android:id="@+id/textView_humor"
@@ -39,7 +39,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="98dp"
         android:layout_marginLeft="19dp"
-        android:text="Result:" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/result" />
 
     <Button
         android:id="@+id/button_check"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Check!!" />
+        android:text="@string/check" />
 
     <TextView
         android:id="@+id/TextView01"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText_editHostname"
-        android:text="Port No:"
+        android:text="@string/port"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -65,6 +66,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextView01"
         android:ems="10"
-        android:singleLine="true" />
+        android:singleLine="true" android:inputType="numberDecimal"/>
 
 </RelativeLayout>
